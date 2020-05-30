@@ -20,12 +20,14 @@ class App extends React.Component {
   }
 
   chooseGallery(e) {
-    const url=`https://jsonplaceholder.typicode.com/photos?albumId=${e.target.value}`
-    fetch (url)
-    .then (data1 => data1.json())
-    .then (photos => {
-        this.setState ({photos})
+    if (e.target.value!=="0") {
+      const url=`https://jsonplaceholder.typicode.com/photos?albumId=${e.target.value}`
+      fetch (url)
+      .then (data => data.json())
+      .then (photos => {
+      this.setState ({photos})
     });
+    }     
   }  
     
   render() {
@@ -33,7 +35,7 @@ class App extends React.Component {
         <div className="App">
           <h1>Select an album:</h1>
           <select name="albums" id="albums" onChange={this.chooseGallery.bind(this)}>
-          <option >Select...</option>
+          <option value={0}>Select...</option>
           {this.state.albums.map(album =>{
                     return ( <option key={album.id} value={album.id}>{album.title}</option> );
                 })}
